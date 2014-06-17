@@ -39,6 +39,17 @@ class DistributionCommandController extends CommandController {
 
 		$this->outputLine('Exporting to SQL dump...');
 
+		foreach ($this->getCacheTables() as $cacheTable) {
+			$command = sprintf('%s -u %s -p%s -e "TRUNCATE table %s;" %s',
+				$this->getMysqlBinary(),
+				$this->getUsername(),
+				$this->getPassword(),
+				$cacheTable,
+				$this->getDatabase()
+			);
+			exec($command);
+		}
+
 		$tables = array_keys($GLOBALS['TCA']);
 		$command = sprintf('mysqldump -u root -proot bootstrapfab %s > %sext_tables_static+adt.sql',
 			implode(' ', $tables),
@@ -49,5 +60,84 @@ class DistributionCommandController extends CommandController {
 
 		$this->outputLine('File has been written at:');
 		$this->outputLine(ExtensionManagementUtility::extPath('speciality_distribution') . 'ext_tables_static+adt.sql');
+	}
+
+
+	/**
+	 * Returns the cache tables.
+	 *
+	 * @return array
+	 */
+	public function getCacheTables() {
+
+		$cacheTables = array(
+			#'be_sessions',
+			'cache_imagesizes',
+			'sys_log',
+			'sys_lockedrecords',
+			'sys_history',
+			#'sys_registry',
+			'sys_file_processedfile',
+			'sys_refindex',
+			'tx_extensionmanager_domain_model_extension',
+		);
+
+		// Get a list of cache table which should be cleared beforehand and merge them into the $tables variable.
+		$tablePrefixes = array(
+			'cf_',
+			'index_',
+			'tx_realurl_',
+		);
+
+		foreach ($tablePrefixes as $prefix) {
+			$result = array();
+
+			$request = sprintf("SELECT GROUP_CONCAT(DISTINCT table_name) FROM information_schema.tables WHERE table_schema = '%s' AND table_name like '%s%%';",
+				$this->getDatabase(),
+				$prefix
+			);
+			$command = sprintf('%s -u %s -p%s -e "%s"',
+				$this->getMysqlBinary(),
+				$this->getUsername(),
+				$this->getPassword(),
+				$request
+			);
+
+			// get the result
+			exec($command, $result);
+
+			if (!empty($result[1]) && $result[1] != 'NULL') {
+				$cacheTables = array_merge($cacheTables, explode(',', $result[1]));
+			}
+
+		}
+		return $cacheTables;
+	}
+	/**
+	 * @return string
+	 */
+	protected function getDatabase() {
+		return 'bootstrapfab';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUsername() {
+		return 'root';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPassword() {
+		return 'root';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMysqlBinary() {
+		return 'mysql';
 	}
 }
