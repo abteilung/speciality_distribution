@@ -38,6 +38,9 @@ $EM_CONF[$_EXTKEY] = array (
 		array (
 			'typo3' => '6.2.0-6.2.99',
 			'speciality' => '',
+			'realurl' => '',
+			'vidi' => '',
+			'media' => '',
 		),
 		'conflicts' =>
 		array (
