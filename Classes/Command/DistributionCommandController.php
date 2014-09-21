@@ -51,7 +51,8 @@ class DistributionCommandController extends CommandController {
 		}
 
 		$tables = array_keys($GLOBALS['TCA']);
-		$command = sprintf('mysqldump -u root -proot bootstrapfab %s > %sext_tables_static+adt.sql',
+		$command = sprintf('mysqldump -u root -proot %s %s > %sext_tables_static+adt.sql',
+			$this->getDatabase(),
 			implode(' ', $tables),
 			ExtensionManagementUtility::extPath('speciality_distribution')
 		);
@@ -117,21 +118,21 @@ class DistributionCommandController extends CommandController {
 	 * @return string
 	 */
 	protected function getDatabase() {
-		return 'bootstrapfab';
+		return $GLOBALS['TYPO3_CONF_VARS']['DB']['database'];
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getUsername() {
-		return 'root';
+		return $GLOBALS['TYPO3_CONF_VARS']['DB']['username'];
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getPassword() {
-		return 'root';
+		return $GLOBALS['TYPO3_CONF_VARS']['DB']['password'];
 	}
 
 	/**
