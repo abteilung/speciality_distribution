@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'description' => 'This package delivers a special website just for you.',
 	'category' => 'distribution',
 	'shy' => 0,
-	'version' => '0.1.0',
+	'version' => '1.0.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -42,6 +42,10 @@ $EM_CONF[$_EXTKEY] = array (
 			'vidi' => '',
 			'media' => '',
 			'context_hints' => '',
+			'scheduler' => '',
+			'nc_staticfilecache' => '',
+			'seo_basics' => '',
+			'typo3_console' => '',
 		),
 		'conflicts' =>
 		array (
