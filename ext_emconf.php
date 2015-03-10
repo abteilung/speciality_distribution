@@ -14,29 +14,19 @@ $EM_CONF[$_EXTKEY] = array (
 	'title' => 'Speciality Distribution',
 	'description' => 'This package delivers a special website just for you.',
 	'category' => 'distribution',
-	'shy' => 0,
 	'version' => '1.0.0',
-	'dependencies' => '',
-	'conflicts' => '',
-	'priority' => '',
-	'loadOrder' => '',
-	'module' => '',
 	'state' => 'beta',
 	'uploadfolder' => 0,
 	'createDirs' => '',
-	'modify_tables' => '',
-	'clearcacheonload' => 1,
-	'lockType' => '',
 	'author' => 'Fabien Udriot',
 	'author_email' => 'support@ecodev.ch',
-	'author_company' => '',
-	'CGLcompliance' => NULL,
-	'CGLcompliance_note' => NULL,
+	'author_company' => 'Ecodev',
 	'constraints' =>
 	array (
 		'depends' =>
 		array (
 			'typo3' => '6.2.0-6.2.99',
+			'vhs' => '',
 			'speciality' => '',
 			'realurl' => '',
 			'vidi' => '',
@@ -55,5 +45,3 @@ $EM_CONF[$_EXTKEY] = array (
 		),
 	),
 );
-
-?>
