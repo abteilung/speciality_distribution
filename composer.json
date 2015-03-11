@@ -4,5 +4,5 @@
 	"description": "This package delivers a special website just for you.",
 	"homepage": "https://github.com/Ecodev/speciality_speciality.git",
 	"license": ["GPL-2.0+"],
-	"version": "1.1.0-dev"
+	"version": "1.1.1"
 }
