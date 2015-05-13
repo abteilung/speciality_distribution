@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array (
 	'title' => 'Speciality Distribution',
-	'description' => 'This package delivers a special website just for you.',
+	'description' => 'Delivers a special website just for you.',
 	'category' => 'distribution',
 	'version' => '1.3.0-dev',
 	'state' => 'beta',
