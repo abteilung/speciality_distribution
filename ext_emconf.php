@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array (
 	'title' => 'Speciality Distribution',
-	'description' => 'Delivers a special website just for you.',
+	'description' => 'Delivers a special website just for you. This distribution can be installed via Composer with command ``composer create-project ecodev/typo3-cms-speciality-distribution htdocs dev-master``',
 	'category' => 'distribution',
 	'version' => '1.3.0-dev',
 	'state' => 'beta',
