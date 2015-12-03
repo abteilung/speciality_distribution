@@ -29,7 +29,6 @@ $EM_CONF[$_EXTKEY] = array (
 			'realurl' => '',
 			'vidi' => '',
 			'media' => '',
-			'context_hints' => '',
 			'scheduler' => '',
 			'nc_staticfilecache' => '',
 			'seo_basics' => '',
