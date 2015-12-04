@@ -44,7 +44,13 @@ class DistributionCommandController extends CommandController
             exec($command);
         }
 
-        $tables = array_keys($GLOBALS['TCA']);
+        $tableWithKeys = $GLOBALS['TCA'];
+        unset($tableWithKeys['tx_vidi_selection']);
+        unset($tableWithKeys['tx_scheduler_task_group']);
+        unset($tableWithKeys['tx_rtehtmlarea_acronym']);
+
+        $tables = array_keys($tableWithKeys);
+
         $command = sprintf('mysqldump -u root -proot %s %s > %sext_tables_static+adt.sql',
             $this->getDatabase(),
             implode(' ', $tables),
