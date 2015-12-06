@@ -24,18 +24,18 @@ $EM_CONF[$_EXTKEY] = array (
 		'depends' =>
 		array (
 			'typo3' => '7.6.0-7.99.99',
-			'vhs' => '',
 			'speciality' => '',
+			'scheduler' => '',
 			'realurl' => '',
 			'vidi' => '',
 			'media' => '',
-			'scheduler' => '',
-			'nc_staticfilecache' => '',
 			'seo_basics' => '',
 			'typo3_console' => '',
+			'nc_staticfilecache' => '',
 		),
 		'conflicts' =>
 		array (
+			'css_styled_content' => '',
 		),
 		'suggests' =>
 		array (
