@@ -46,10 +46,10 @@ class DistributionCommandController extends CommandController
 
         $tableWithKeys = $GLOBALS['TCA'];
         unset($tableWithKeys['tx_vidi_selection']);
-        unset($tableWithKeys['tx_scheduler_task_group']);
         unset($tableWithKeys['tx_rtehtmlarea_acronym']);
 
         $tables = array_keys($tableWithKeys);
+        $tables[] = 'tx_scheduler_task'; // Add this special table.
 
         $command = sprintf('mysqldump -u root -proot %s %s > %sext_tables_static+adt.sql',
             $this->getDatabase(),
