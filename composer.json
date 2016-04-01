@@ -2,12 +2,15 @@
 	"name": "ecodev/speciality-distribution",
 	"type": "typo3-cms-extension",
 	"description": "Delivers a special website just for you.",
-	"homepage": "https://github.com/Ecodev/speciality_speciality.git",
+	"homepage": "https://github.com/Ecodev/speciality_distribution.git",
 	"license": ["GPL-2.0+"],
 	"autoload": {
 		"psr-4": {
 			"Ecodev\\SpecialityDistribution\\": "Classes"
 		}
 	},
-	"version": "1.3.0-dev"
+	"replace": {
+		"speciality_distribution": "self.version",
+		"typo3-ter/speciality_distribution": "self.version"
+	}
 }
