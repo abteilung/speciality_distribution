@@ -73,6 +73,10 @@ class DistributionCommandController extends CommandController
     protected function stripLanguageDiff()
     {
         $this->outputLine('Remove language diff...');
+        $this->getDatabaseConnection()->sql_query('UPDATE sys_file_metadata SET l10n_diffsource = ""');
+        $this->getDatabaseConnection()->sql_query('UPDATE sys_file_reference SET l10n_diffsource = ""');
+        $this->getDatabaseConnection()->sql_query('UPDATE sys_category SET l10n_diffsource = ""');
+
         $this->getDatabaseConnection()->sql_query('UPDATE pages_language_overlay SET l18n_diffsource = ""');
         $this->getDatabaseConnection()->sql_query('UPDATE tt_content SET l18n_diffsource = ""');
     }
