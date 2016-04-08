@@ -31,18 +31,12 @@ class DistributionCommandController extends CommandController
     public function exportCommand()
     {
 
-        $this->outputLine('Exporting to SQL dump...');
+        $this->truncateCacheTables();
+        $this->cleanUpDeletedRecords();
+        $this->flushUserPreferences();
+        $this->stripLanguageDiff();
 
-        foreach ($this->getCacheTables() as $cacheTable) {
-            $command = sprintf('%s -u %s -p%s -e "TRUNCATE table %s;" %s',
-                $this->getMysqlBinary(),
-                $this->getUsername(),
-                $this->getPassword(),
-                $cacheTable,
-                $this->getDatabase()
-            );
-            exec($command);
-        }
+        $this->outputLine('Exporting to SQL dump...');
 
         $tableWithKeys = $GLOBALS['TCA'];
         unset($tableWithKeys['tx_vidi_selection']);
@@ -50,6 +44,7 @@ class DistributionCommandController extends CommandController
 
         $tables = array_keys($tableWithKeys);
         $tables[] = 'tx_scheduler_task'; // Add this special table.
+        $tables[] = 'sys_category_record_mm'; // Add this special table.
 
         $command = sprintf('mysqldump -u root -proot %s %s > %sext_tables_static+adt.sql',
             $this->getDatabase(),
@@ -63,13 +58,76 @@ class DistributionCommandController extends CommandController
         $this->outputLine(ExtensionManagementUtility::extPath('speciality_distribution') . 'ext_tables_static+adt.sql');
     }
 
+    /**
+     * @return void
+     */
+    protected function flushUserPreferences()
+    {
+        $this->outputLine('Flush user preferences...');
+        $this->getDatabaseConnection()->sql_query('UPDATE be_users SET uc = ""');
+    }
+
+    /**
+     * @return void
+     */
+    protected function stripLanguageDiff()
+    {
+        $this->outputLine('Remove language diff...');
+        $this->getDatabaseConnection()->sql_query('UPDATE pages_language_overlay SET l18n_diffsource = ""');
+        $this->getDatabaseConnection()->sql_query('UPDATE tt_content SET l18n_diffsource = ""');
+    }
+
+    /**
+     * @return void
+     */
+    protected function cleanUpDeletedRecords()
+    {
+
+        $this->outputLine('Cleaning up deleted records...');
+
+        $tableNames = [
+            'tt_content',
+            'pages',
+            'pages_language_overlay',
+            'sys_file_reference',
+        ];
+
+        foreach ($tableNames as $tableName) {
+            $query = sprintf(
+                'DELETE FROM %s WHERE deleted = 1',
+                $tableName
+            );
+            $this->getDatabaseConnection()->sql_query($query);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function truncateCacheTables()
+    {
+
+        $this->outputLine('Truncating cache tables...');
+
+        foreach ($this->getCacheTables() as $cacheTable) {
+            $command = sprintf(
+                '%s -u %s -p%s -e "TRUNCATE table %s;" %s',
+                $this->getMysqlBinary(),
+                $this->getUsername(),
+                $this->getPassword(),
+                $cacheTable,
+                $this->getDatabase()
+            );
+            exec($command);
+        }
+    }
 
     /**
      * Returns the cache tables.
      *
      * @return array
      */
-    public function getCacheTables()
+    protected function getCacheTables()
     {
 
         $cacheTables = array(
@@ -107,7 +165,7 @@ class DistributionCommandController extends CommandController
             // get the result
             exec($command, $result);
 
-            if (!empty($result[1]) && $result[1] != 'NULL') {
+            if (!empty($result[1]) && $result[1] !== 'NULL') {
                 $cacheTables = array_merge($cacheTables, explode(',', $result[1]));
             }
 
@@ -145,5 +203,15 @@ class DistributionCommandController extends CommandController
     public function getMysqlBinary()
     {
         return 'mysql';
+    }
+
+    /**
+     * Returns a pointer to the database.
+     *
+     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected function getDatabaseConnection()
+    {
+        return $GLOBALS['TYPO3_DB'];
     }
 }
