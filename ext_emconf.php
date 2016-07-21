@@ -5,9 +5,9 @@ $EM_CONF[$_EXTKEY] = [
 	'category' => 'distribution',
 	'state' => 'stable',
 	'author' => 'Fabien Udriot',
-	'author_email' => 'support@ecodev.ch',
+	'author_email' => 'fabien@ecodev.ch',
 	'author_company' => 'Ecodev',
-	'version' => '1.3.0-dev',
+	'version' => '1.2.10',
 	'constraints' =>
 	[
 		'depends' =>
