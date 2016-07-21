@@ -7,7 +7,7 @@ $EM_CONF[$_EXTKEY] = [
 	'author' => 'Fabien Udriot',
 	'author_email' => 'fabien@ecodev.ch',
 	'author_company' => 'Ecodev',
-	'version' => '1.2.10',
+	'version' => '1.3.0-dev',
 	'constraints' =>
 	[
 		'depends' =>
