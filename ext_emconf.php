@@ -12,17 +12,14 @@ $EM_CONF[$_EXTKEY] = [
 	[
 		'depends' =>
 		[
-			'typo3' => '7.6.0-7.99.99',
+			'typo3' => '7.6.0-8.99.99',
 			'speciality' => '',
 			'scheduler' => '',
 			'realurl' => '',
 			'vidi' => '',
 			'vidi_frontend' => '',
-			'natural_gallery' => '',
 			'media' => '',
-			'seo_basics' => '',
 			'typo3_console' => '',
-			'nc_staticfilecache' => '',
 		],
 		'conflicts' =>
 		[

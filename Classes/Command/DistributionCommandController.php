@@ -1,5 +1,5 @@
 <?php
-namespace Ecodev\SpecialityDistribution\Command;
+namespace Abteilung\SpecialityDistribution\Command;
 
 /**
  * This file is part of the TYPO3 CMS project.
